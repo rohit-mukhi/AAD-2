@@ -21,9 +21,9 @@ public class LinearProbing {
             return;
         }
         int idx = hash(k);
-        while (T[idx] != -1 && T[idx] != k) {
+        while (T[idx] != -1)
             idx = (idx + 1) % m;
-        }
+        
         T[idx] = k;
         size++;
     }
@@ -42,40 +42,47 @@ public class LinearProbing {
         int idx = hash(k);
         while (T[idx] != -1) {
             if (T[idx] == k) {
-                T[idx] = -1;
+                T[idx] = -1; // Mark as deleted
                 size--;
                 return;
             }
             idx = (idx + 1) % m;
         }
-        System.out.println("Key not found in the table");
+        System.out.println("Key not found in the table!!!");
     }
 
     public void printTable() {
         for (int i = 0; i < m; i++) {
-            if (T[i] == -1)
-                System.out.print("EMPTY ");
-            else
+            if (T[i] == -1){
+
+            
+                System.out.println("EMPTY ");
+            }else{
                 System.out.print(T[i] + " ");
+
+            }
+
+        
+                
         }
-        System.out.println();
+      System.out.println();
     }
 
     public static void main(String[] args) {
         LinearProbing obj = new LinearProbing(10);
         obj.insert(10);
-        obj.insert(20);
+        obj.insert(12);
         obj.insert(13);
-        obj.insert(60);
-        obj.insert(53);
-        obj.insert(40);
+        obj.insert(19);
+        obj.insert(54);
+        obj.insert(45);
 
-        System.out.println("Hash Table after insert: ");
+        System.out.println("Hash Table after insertions: ");
         obj.printTable();
         System.out.println("Search for 13: " + obj.search(13));
-        System.out.println("Search for 40: " + obj.search(40));
-        obj.delete(13);
-        System.out.println("Hash Table after deletion key: ");
+        System.out.println("Search for 54: " + obj.search(54));
+        obj.delete(45);
+        System.out.println("Hash Table after deletion key 45: ");
         obj.printTable();
     }
 }
