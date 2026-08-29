@@ -1,48 +1,47 @@
-import java.util.Arrays;
-
-public class Merge_Sort {
-
-    public static void MERGE(int[] A, int p, int q, int r) {
-        int n1 = q - p + 1;
-        int n2 = r - q;
-        int[] L = new int[n1 + 1], R = new int[n2 + 1];
-
-        for (int i = 0; i < n1; i++) {
-            L[i] = A[p + i];
+public class MergeSort {
+    public static void main(String[] args) {
+        int[] arr = {6, 7, 3, 2, 7, 1, 8, 9};
+        mergeSort(arr, 0, arr.length-1);
+        for(int val : arr) {
+            System.out.print(val + " ");
         }
-        for (int i = 0; i < n2; i++) {
-            R[i] = A[q + i + 1];
+        System.out.println();
+    }
+
+    public static void mergeSort(int[] arr, int low, int high) {
+        if(low >= high) {
+            return;
         }
+        int mid = low + (high - low)/2;
+        mergeSort(arr, low, mid);
+        mergeSort(arr, mid+1, high);
+        merge(arr, low, mid, high);
+    }
 
-        L[n1] = Integer.MAX_VALUE;
-        R[n2] = Integer.MAX_VALUE;
+    public static void merge(int[] arr, int low, int mid, int high) {
+        int left = low;
+        int right = mid+1;
+        int[] temp = new int[high-low+1];
+        int idx=0;
 
-        int i = 0, j = 0;
-        for (int k = p; k <= r; k++) {
-            if (L[i] <= R[j]) {
-                A[k] = L[i];
-                i++;
+        while(left <=mid && right <= high) {
+            if(arr[left] <= arr[right]) {
+                temp[idx++] = arr[left++];
             } else {
-                A[k] = R[j];
-                j++;
+                temp[idx++] = arr[right++];
             }
         }
-    }
 
-    public static void MERGE_SORT(int[] A, int p, int r) {
-        if (p < r) {
-            int q = (p + r) / 2;
-            MERGE_SORT(A, p, q);
-            MERGE_SORT(A, q + 1, r);
-            MERGE(A, p, q, r);
+        while(left <= mid) {
+            temp[idx++] = arr[left++];
         }
-    }
 
-    public static void main(String args[]) {
-        int[] a = {5, 2, 4, 6, 1, 3};
-        int p = 0;
-        int r = a.length - 1;
-        MERGE_SORT(a, p, r);
-        System.out.println(Arrays.toString(a));
+        while(right <= high) {
+            temp[idx++] = arr[right++];
+        }
+
+        for(int i=0; i<temp.length; i++) {
+            arr[low+i] = temp[i];
+        }
     }
 }
